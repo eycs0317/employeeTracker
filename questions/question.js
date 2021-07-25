@@ -29,7 +29,7 @@ const addRoleQuestion = [
   {
     type: 'list',
     message: 'Which department does the role? belong to?',
-    name: 'newDepartmentName'
+    name: 'newDepartmentName',
     list: /////////// need to get it from the db
   }
 ]
@@ -47,8 +47,29 @@ const addEmployeeQuestion = [
   },
   {
     type: 'input',
-    message: "What is the employee's role",
-    name: 'newEmployeeRole'
+    message: "What is the employee's role?",
+    name: 'newEmployeeRole',
     list: /////////// need to get it from the db
+  },
+  {
+    type: 'list',
+    message: "Who is the employee's manager?",
+    name: 'newEmployeeManagerRole',
+    list: /////////// need to get it from the db
+  }
+]
+
+const updateEmployeeRoleQuestion = [
+  {
+    type:'list',
+    message: "Which employee's role do you want to update?",
+    name: 'updateEmployeeName',
+    choices: //need to get from db
+  },
+  {
+    type: 'list',
+    message: 'Which role do you want to assign the selected employee?',
+    name: 'updateEmployeetoNewDepartment',
+    choices: // from db all department
   }
 ]
