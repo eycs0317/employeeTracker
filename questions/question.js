@@ -33,3 +33,22 @@ const addRoleQuestion = [
     list: /////////// need to get it from the db
   }
 ]
+
+const addEmployeeQuestion = [
+  {
+    type: 'input',
+    message: `What is the employee's first name?`,
+    name: 'newEmployeeFirstName'
+  },
+  {
+    type: 'input',
+    message: `What is the employee's last name?`,
+    name: 'newEmployeeLastName'
+  },
+  {
+    type: 'input',
+    message: "What is the employee's role",
+    name: 'newEmployeeRole'
+    list: /////////// need to get it from the db
+  }
+]
