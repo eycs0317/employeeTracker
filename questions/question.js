@@ -3,7 +3,7 @@ const initQuestion = [
     type: 'list',
     message: 'What would you like to do?',
     name: 'userInitInput',
-    choices: ['View All Employees', 'Add Employee', 'Update Employee Role', 'View ALl Role', 'Add Role', 'View All Departments', 'Add Department', 'Quit']
+    choices: ['View All Employees', 'Add Employee', 'Update Employee Role', 'View All Role', 'Add Role', 'View All Departments', 'Add Department', 'Quit']
   }
 ]
 
@@ -15,6 +15,7 @@ const addDepartmentQuestion = [
   }
 ]
 
+/////////// need to get it from the db
 const addRoleQuestion = [
   {
     type: 'input',
@@ -30,10 +31,11 @@ const addRoleQuestion = [
     type: 'list',
     message: 'Which department does the role? belong to?',
     name: 'newDepartmentName',
-    list: /////////// need to get it from the db
+    choices: ['a','b']
   }
 ]
 
+/////////// need to get it from the db  newEmployeeRole and newEmployeeManagerRole
 const addEmployeeQuestion = [
   {
     type: 'input',
@@ -49,27 +51,35 @@ const addEmployeeQuestion = [
     type: 'input',
     message: "What is the employee's role?",
     name: 'newEmployeeRole',
-    list: /////////// need to get it from the db
+    list: ['a','b']
   },
   {
     type: 'list',
     message: "Who is the employee's manager?",
     name: 'newEmployeeManagerRole',
-    list: /////////// need to get it from the db
+    list: ['a','b']
   }
 ]
-
+//need to get from db   updateEmployeeName / updateEmployeetoNewDepartment
 const updateEmployeeRoleQuestion = [
   {
     type:'list',
     message: "Which employee's role do you want to update?",
     name: 'updateEmployeeName',
-    choices: //need to get from db
+    choices: ['a', 'b']
   },
   {
     type: 'list',
     message: 'Which role do you want to assign the selected employee?',
     name: 'updateEmployeetoNewDepartment',
-    choices: // from db all department
+    choices: ['a', 'b']
   }
 ]
+
+module.exports.initQuestion = initQuestion
+module.exports.addDepartmentQuestion = addDepartmentQuestion
+module.exports.addRoleQuestion = addRoleQuestion
+module.exports.addEmployeeQuestion = addEmployeeQuestion
+module.exports.updateEmployeeRoleQuestion = updateEmployeeRoleQuestion
+
+
