@@ -3,7 +3,7 @@ const initQuestion = [
     type: 'list',
     message: 'What would you like to do?',
     name: 'userInitInput',
-    choices: ['View All Employees', 'Add Employee', 'Update Employee Role', 'View ALl Role', 'Add Role', 'View All Departments', 'Add Department']
+    choices: ['View All Employees', 'Add Employee', 'Update Employee Role', 'View ALl Role', 'Add Role', 'View All Departments', 'Add Department', 'Quit']
   }
 ]
 
