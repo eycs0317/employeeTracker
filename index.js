@@ -33,6 +33,7 @@ function initPrompt () {
       addDept()
     } else {
       console.log('quittttt')
+      connection.end();
       return;
     }
 }).catch(err => {
@@ -44,7 +45,7 @@ initPrompt()
 
 
 
-
+//Show
 function showAllDept() {
   connection.promise().query('SELECT * FROM department')
     .then(rows => {
@@ -95,7 +96,7 @@ function showAllEmpl() {
 
 // showAllEmpl();
 
-//add
+//Add
 function addDept() {
   inquirer.prompt(addDepartmentQuestion)
   .then(answer => {
@@ -114,16 +115,30 @@ function addRole() {
     for(var i = 0; i < allDeptTable.length; i++) {
       addRoleQuestion[2].choices.push(allDeptTable[i].name)
     }
-    console.log('addRoleQuestion', addRoleQuestion)
+    // console.log('addRoleQuestion', addRoleQuestion)
+    inquirer.prompt(addRoleQuestion)
+    .then(answer => {
+      // console.log('answer=====', answer)
+      let deptName = answer.newDepartmentName;
+      connection.promise().query(`SELECT * FROM department WHERE name = '${deptName}'`)
+      .then(rows => {
+        let deptId = rows[0][0].id;
+        // console.log('rows', rows[0].length)
+        // console.log('rows[0].id', rows[0].id)
+        // console.log('ans', answer)
+        // console.log('answer.newRoleName', answer.newRoleName)
+        // console.log('answer.newRoleSalary', answer.newRoleSalary)
+        // console.log('deptId', deptId)
+        connection.query(`INSERT INTO role (title, salary, department_id) VALUE ('${answer.newRoleName}', ${Number(answer.newRoleSalary)}, ${deptId})`, err => {
+          if (err) throw err;
+          initPrompt();
+        })
+      })
+    })
   })
   .catch(err => {
     console.log('error', err)
   })
-  // console.log('res-->', res)
-  // console.log('allDept',allDept)
-  // addRoleQuestion[2].choices = allDept;
-  // console.log('allDept', addRoleQuestion)
-
 }
 
 // addRole()
