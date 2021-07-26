@@ -89,12 +89,12 @@ function addDept() {
   inquirer.prompt(addDepartmentQuestion)
   .then(answer => {
     answer = answer.newDepartmentName;
-    let queryStr = `INSERT INTO department (name) VALUE (${answer})`
-    connection.query('queryStr', (err, results) => {
+    let queryStr = `INSERT INTO department (name) VALUE (${answer});`
+    connection.query(queryStr, (err, results) => {
       if (err) throw err;
     })
   })
   console.log('end of the addDept function')
-  initPrompt();
+
 }
 
