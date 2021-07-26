@@ -123,12 +123,6 @@ function addRole() {
       connection.promise().query(`SELECT * FROM department WHERE name = '${deptName}'`)
       .then(rows => {
         let deptId = rows[0][0].id;
-        // console.log('rows', rows[0].length)
-        // console.log('rows[0].id', rows[0].id)
-        // console.log('ans', answer)
-        // console.log('answer.newRoleName', answer.newRoleName)
-        // console.log('answer.newRoleSalary', answer.newRoleSalary)
-        // console.log('deptId', deptId)
         connection.query(`INSERT INTO role (title, salary, department_id) VALUE ('${answer.newRoleName}', ${Number(answer.newRoleSalary)}, ${deptId})`, err => {
           if (err) throw err;
           initPrompt();
@@ -141,5 +135,7 @@ function addRole() {
   })
 }
 
-// addRole()
+function addEmployee() {
+
+}
 
