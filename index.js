@@ -15,7 +15,7 @@ const connection = mysql.createConnection({
 ///prompt
 function initPrompt () {
   inquirer.prompt(initQuestion)
-.then(answer => {
+  .then(answer => {
     answer = answer.userInitInput;
     if(answer === 'View All Employees') {
       showAllEmpl()
@@ -26,8 +26,8 @@ function initPrompt () {
     } else if (answer === 'View All Role') {
       showAllRole()
     } else if (answer === 'Add Role') {
-
-    } else if (answer === 'View All Department') {
+      addRole(showAllDept)
+    } else if (answer === 'View All Departments') {
       showAllDept()
     } else if (answer === 'Add Department') {
       addDept()
@@ -46,11 +46,15 @@ initPrompt()
 
 
 function showAllDept() {
-  connection.query('SELECT * FROM department', (err, results) => {
-    if (err) throw err;
-    console.table(results)
-  })
-  initPrompt();
+  connection.promise().query('SELECT * FROM department')
+    .then(rows => {
+      console.log('rows',rows[0])
+      console.table(rows[0])
+      initPrompt();
+    })
+    .catch(err => {
+      console.log('showAllDept error', err)
+    })
 }
 // showAllDept()
 
@@ -58,11 +62,14 @@ function showAllRole() {
   var str = `SELECT r.id, r.title, r.salary, d.name
             FROM role r
             inner join department d on r.department_id = d.id;`
-  connection.query(str, (err, results) => {
-    if (err) throw err;
-    console.table(results)
+  connection.promise().query(str)
+  .then(rows => {
+    console.table(rows[0])
+    initPrompt();
   })
-  initPrompt();
+  .catch(err => {
+    console.log('showAllRole error', err)
+  })
 }
 
 // showAllRole();
@@ -75,11 +82,15 @@ function showAllEmpl() {
               inner join department d on role.department_id = d.id
               inner join employee m on m.manager_id = e.id;
               `
-  connection.query(str, (err,results) => {
-    if (err) throw err;
-    console.table(results)
+  connection.promise().query(str)
+  .then(rows => {
+    console.table(rows[0])
+    initPrompt();
   })
-  initPrompt();
+ .catch(err => {
+    console.log('showAllRole error', err)
+  })
+
 }
 
 // showAllEmpl();
@@ -89,12 +100,31 @@ function addDept() {
   inquirer.prompt(addDepartmentQuestion)
   .then(answer => {
     answer = answer.newDepartmentName;
-    let queryStr = `INSERT INTO department (name) VALUE (${answer});`
-    connection.query(queryStr, (err, results) => {
+    connection.query(`INSERT INTO department (name) VALUES ('${answer}')`, (err, results, fields) => {
       if (err) throw err;
+      initPrompt();
     })
   })
-  console.log('end of the addDept function')
+}
+
+function addRole() {
+  connection.promise().query('SELECT * FROM department')
+  .then(rows => {
+    let allDeptTable = rows[0]
+    for(var i = 0; i < allDeptTable.length; i++) {
+      addRoleQuestion[2].choices.push(allDeptTable[i].name)
+    }
+    console.log('addRoleQuestion', addRoleQuestion)
+  })
+  .catch(err => {
+    console.log('error', err)
+  })
+  // console.log('res-->', res)
+  // console.log('allDept',allDept)
+  // addRoleQuestion[2].choices = allDept;
+  // console.log('allDept', addRoleQuestion)
 
 }
+
+// addRole()
 
