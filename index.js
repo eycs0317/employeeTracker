@@ -9,7 +9,7 @@ const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   database: 'cms_db',
-  password: 'databasehell' //Your password here
+  password: '' //Your password here
 });
 
 ///prompt
