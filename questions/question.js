@@ -48,16 +48,16 @@ const addEmployeeQuestion = [
     name: 'newEmployeeLastName'
   },
   {
-    type: 'input',
+    type: 'list',
     message: "What is the employee's role?",
     name: 'newEmployeeRole',
-    list: ['a','b']
+    choices: []
   },
   {
     type: 'list',
     message: "Who is the employee's manager?",
     name: 'newEmployeeManagerRole',
-    list: ['a','b']
+    choices: [{name: 'None', value: null}]
   }
 ]
 //need to get from db   updateEmployeeName / updateEmployeetoNewDepartment
