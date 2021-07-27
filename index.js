@@ -22,7 +22,7 @@ function initPrompt () {
     } else if( answer === 'Add Employee') {
       addEmployee()
     } else if (answer === 'Update Employee Role') {
-
+      updateEmployee();
     } else if (answer === 'View All Role') {
       showAllRole()
     } else if (answer === 'Add Role') {
@@ -141,24 +141,7 @@ function addRole() {
   })
 }
 
-var arrayOfRoleSelection = [];
-function roleSelection() {
-  connection.promise().query('SELECT role.title FROM role')
-  .then(result => {
 
-  })
-    if (err) throw err
-    console.log('results -->', results.length)
-    for (var i = 0; i < results.length; i++) {
-      arrayOfRoleSelection.push(results[i].title)
-    }
-    console.log('arrayOfRoleSelection',arrayOfRoleSelection)
-    return arrayOfRoleSelection;
-
-  // console.log('outtt',arrayOfRoleSelection)
-  // return arrayOfRoleSelection;
-}
-// addEmployeeQuestion
 function addEmployee() {
   connection.promise().query('SELECT * FROM role')
   .then(rows => {
@@ -184,10 +167,43 @@ function addEmployee() {
         connection.promise().query(query, value)
         .then(res => {
           console.log('res - added', res)
+          initPrompt();
         })
       })
     })
 
   })
 }
+// updateEmployeeRoleQuestion
+function updateEmployee() {
+  connection.promise().query('SELECT * FROM employee')
+  .then(res => {
+    let allEmpl = res[0];
+    // console.log('allEmpl', allEmpl)
+    for(var i = 0; i < allEmpl.length; i++) {
+      updateEmployeeRoleQuestion[0].choices.push({'name': allEmpl[i].first_name + ' ' + allEmpl[i].last_name, value: allEmpl[i].id })
+    }
+    connection.promise().query('SELECT * FROM role')
+    .then(res => {
+      let allRole = res[0];
+      for(var i = 0; i < allRole.length; i++) {
+        updateEmployeeRoleQuestion[1].choices.push({'name': allRole[i].title, value: allRole[i].id})
+      }
+      inquirer.prompt(updateEmployeeRoleQuestion)
+      .then(answers => {
+        console.log('answer --->', answers)
+        connection.promise().query('UPDATE employee SET role_id = ? WHERE id = ?', [answers.updateEmployeetoNewDepartment, answers.employeeName])
+        .then(res => {
+          console.log('res', res)
+          initPrompt();
+        })
+      })
+    })
+  })
+}
+
+
+// UPDATE employee
+// SET role_id = ?
+// WHERE CustomerID = ?;
 

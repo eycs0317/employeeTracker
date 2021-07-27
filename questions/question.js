@@ -65,14 +65,14 @@ const updateEmployeeRoleQuestion = [
   {
     type:'list',
     message: "Which employee's role do you want to update?",
-    name: 'updateEmployeeName',
-    choices: ['a', 'b']
+    name: 'employeeName',
+    choices: []
   },
   {
     type: 'list',
     message: 'Which role do you want to assign the selected employee?',
     name: 'updateEmployeetoNewDepartment',
-    choices: ['a', 'b']
+    choices: []
   }
 ]
 
